@@ -1,0 +1,443 @@
+openapi: 3.0.1
+title: Sample API
+description: This is a sample server for a restaurant.
+termsOfService: http://example.com/terms/
+contact:
+  name: API Support
+  url: http://www.example.com/support
+  email: support@example.com
+license:
+  name: Apache 2.0
+  url: https://www.apache.org/licenses/LICENSE-2.0.html
+servers:
+  - url: http://localhost:9091/
+    description: Development server
+paths:
+  /signup:
+    post:
+      summary: Creates a user.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/newuser'
+      responses: 
+        '201':
+          description: Created
+        '406':
+          description: el email ya esta registrado 
+        '405':
+          description: el passrword no coincide
+      tags:
+        - newuser
+    get: 
+      summary: ver la lista de usuarios
+      description: muestra array de usuarios
+      responses:
+        '200':
+          description: array de usuarios
+          content:
+            application/json:
+              schema: 
+                type: array
+                items: 
+                  type: string
+      tags:
+        - admin    
+  /login:
+    post:
+      summary: inicio de sesion de usuarios
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'          
+      responses:
+        '200':
+          description: Ingreso exitoso
+        '401':
+          description: Email incorrecto
+      tags:
+        - User
+        - admin
+  /platos:
+    get:
+      description: muestra platos del menu
+      summary: Muestra platos.
+      responses:
+        '200':
+          description: array de platos
+          content:
+            application/json:
+              schema: 
+                type: array
+                items: 
+                  type: string
+      tags:
+        - admin
+    post:
+      description: permite al administrador agregar platos en la tabla de platos
+      summary: agregar platos
+      parameters:
+        - in: header
+          name: pos
+          required: true
+          schema: 
+            type: integer
+            description: posicion del admin en su array
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/agregarPlatos'
+      responses:
+        '200':
+          description: Se agrego el plato
+        '401':
+          description: error
+      tags:
+        - admin
+  /platos/{idPlato}:
+    get:
+      description: permite al admin ver platos del menu
+      summary: ver un plato
+      parameters:
+        - in: path
+          name: idPlato
+          required: true
+          schema:
+            type: integer
+            description: id del plato
+        - in: header
+          name: pos
+          required: true
+          schema:
+            type: integer
+            description: posicion del usuario en su array
+      responses:
+        '200':
+          description: plato
+        '401':
+          description: plato no encontrado
+      tags:
+        - admin
+    put:
+      description: permite al administrador modificar platos en la tabla de platos
+      summary: modificar platos
+      parameters: 
+          - in: path
+            name: idPlato
+            required: true
+            schema:
+              type: integer
+              description: id del plato
+          - in: header
+            name: pos
+            required: true
+            schema:
+              type: integer
+              description: posicion del usuario en su array
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/modificarPlato'
+      responses:
+        '200':
+          description: Se modifico el plato
+        '401':
+          description: error
+      tags:
+        - admin
+    delete:
+      description: permite al admin borrar platos del menu
+      summary: borrar un plato
+      parameters:
+        - in: path
+          name: idPlato
+          required: true
+          schema:
+            type: integer
+            description: id del plato
+        - in: header
+          name: pos
+          required: true
+          schema:
+            type: integer
+            description: posicion del usuario en su array
+      responses:
+        '200':
+          description: plato eliminado
+        '401':
+          description: error
+      tags:
+        - admin
+  /pedidos:
+    get:
+      description: muestra pedidos 
+      summary: Muestra pedidos.
+      responses:
+        '200':
+          description: array de pedidos
+          content:
+            application/json:
+              schema: 
+                type: array
+                items: 
+                  type: string
+      tags:
+        - admin      
+  /pedidos/{idPedido}:
+    put:
+      description: permite al administrador modificar estado del pedido
+      summary: modificar estado del pedido
+      parameters: 
+        - in: path 
+          name: idPedido
+          required: true
+          schema:
+            type: integer
+            description: id del pedido
+        - in: header
+          name: pos
+          required: true
+          schema:
+            type: integer
+            description: posicion del usuario en su array
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/modificarPedido'
+      responses:
+        '200':
+          description: Se modifico el estado con exito
+        '401':
+          description: pedido no existe
+      tags:
+        - admin
+  /pedir/{idPlato}:
+    post:
+      description: permite al cliente gregar platos en su pedido
+      summary: agregar platos a su pedido
+      parameters: 
+          - in: path
+            name: idPlato
+            required: true
+            schema:
+              type: integer
+              description: id del plato
+          - in: header
+            name: pos
+            required: true
+            schema:
+              type: integer
+              description: posicion del usuario en su array  
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/pedirPlatos'
+      responses:
+        '200':
+          description: Se agrego el plato al pedido
+        '401':
+          description: error
+      tags:
+        - User
+  /confirm/{idPago}:
+    post:
+      description: permite al cliente confirmar su pedido
+      summary: confirma su pedido
+      parameters: 
+          - in: path
+            name: idPago
+            required: true
+            schema:
+              type: integer
+              description: id de pago     
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/confirmar'
+      responses:
+        '200':
+          description: Se confirmo el pedido
+        '401':
+          description: error
+      tags:
+        - User
+  /pago:
+    get:    
+      description: muestra pagos disponibles 
+      summary: Muestra medios de pago disponibles.
+      responses:
+        '200':
+          description: array de pagos
+          content:
+            application/json:
+              schema: 
+                type: array
+                items: 
+                  type: string
+      tags:
+        - admin
+  /menu:
+    get:
+      description: muestra platos del menu
+      summary: Muestra platos.
+      parameters:
+        - in: header
+          name: pos
+          required: true
+          schema:
+            type: integer
+            description: posicion del usuario en su array
+      responses:
+        '200':
+          description: array de platos
+          content:
+            application/json:
+              schema: 
+                type: array
+                items: 
+                  type: string
+      tags:
+        - User
+  /history:
+    get:
+      description: muestra historial de pedidos
+      summary: Muestra historial.
+      parameters:
+        - in: header
+          name: pos
+          required: true
+          schema:
+            type: integer
+            description: posicion del usuario en su array
+      responses:
+        '200':
+          description: array de historial
+          content:
+            application/json:
+              schema: 
+                type: array
+                items: 
+                  type: string
+      tags:
+        - User
+components:
+  schemas:
+    newuser:
+      properties:
+        usuario: 
+          type: string
+        nombre:
+          type: string 
+        apellido: 
+          type: string
+        email: 
+          type: string
+        telefono: 
+          type: string 
+        direccion: 
+          type: "string"
+        password: 
+          type: string
+        repPasswrd: 
+          type: string    
+    User:
+      properties:
+      mail:
+        type: string
+      pass:
+        type: string
+    agregarPlatos:
+      parameters:
+        - in: header
+          name: pos
+          required: true
+          schema:
+            type: integer
+            description: posicion del admin en su array
+      properties:
+        descripcion:
+          type: string
+        precio:
+          type: integer
+    modificarPlato:
+      parameters: 
+        - in: path
+          name: idPlato
+          required: true
+          schema:
+            type: integer
+            description: id del plato
+        - in: header
+          name: pos
+          required: true
+          schema:
+            type: integer
+            description: posicion del admin en su array    
+      properties:
+      descripcion:
+        type: string
+      precio:
+        type: integer
+    pedirPlatos:
+      parameters: 
+          - in: path
+            name: idPlato
+            required: true
+            schema:
+              type: integer
+              description: id del plato
+          - in: header
+            name: pos
+            required: true
+            schema:
+              type: integer
+              description: posicion del usuario en su array
+      properties:
+        cantidad:
+          type: integer
+    modificarPedido:
+      parameters: 
+          - in: path
+            name: idPedido
+            required: true
+            schema:
+              type: integer
+              description: id del pedido
+          - in: header
+            name: pos
+            required: true
+            schema:
+              type: integer
+              description: posicion del admin en su array    
+      properties:
+        estado:
+          type: string
+    confirmar:
+      parameters: 
+        - in: path
+          name: idPago
+          required: true
+          schema:
+            type: integer
+            description: id de pago 
+      properties:
+        direccion: 
+          type: string
+      
+    
+
+    
