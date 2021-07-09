@@ -33,7 +33,7 @@ function createRoutes(app) {
   ///agregar plato
   app.post('/platos', adminValidate, crearplato);
   //ver un plato
-  app.use('/platos/:idPlato', midBuscarId, adminValidate);
+  app.use('/platos/:idPlato', midBuscarId, adminValidate);//middelwares para autenticar administrador y para buscar el plato en el array de productos
   app.get('/platos/:idPlato', showPlato);
   // borrar un plato
   app.delete('/platos/:idPlato', eliminar);

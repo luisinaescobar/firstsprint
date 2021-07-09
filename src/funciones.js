@@ -15,6 +15,7 @@ function adminLog(req, res, next) {
         }
     } res.send('No es admin')
 };
+//middleware para validar Admin//
 function adminValidate(req, res, next) {
     const pos = Number(req.headers.pos);
 

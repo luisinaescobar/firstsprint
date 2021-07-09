@@ -136,6 +136,7 @@ paths:
               description: id del plato
           - in: header
             name: pos
+            description: posicion del usuario o administrador en el array general de todos los usuarios
             required: true
             schema:
               type: integer
@@ -148,9 +149,11 @@ paths:
               $ref: '#/components/schemas/modificarPlato'
       responses:
         '200':
-          description: Se modifico el plato
-        '401':
-          description: error
+          description: plato modificado
+        '403':
+          description: no es admin
+        '404':
+          description: plato no encontrado  
       tags:
         - admin
     delete:
@@ -165,6 +168,7 @@ paths:
             description: id del plato
         - in: header
           name: pos
+          description: posicion del usuario o administrador en el array general de todos los usuarios
           required: true
           schema:
             type: integer
@@ -172,8 +176,10 @@ paths:
       responses:
         '200':
           description: plato eliminado
-        '401':
-          description: error
+        '403':
+          description: no es admin
+        '404':
+          description: plato no encontrado  
       tags:
         - admin
   /pedidos:
