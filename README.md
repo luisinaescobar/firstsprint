@@ -1,4 +1,4 @@
-# Sprint Project 1
+# Sprint Project 2
 
 ## Recursos y tecnologias aplicadas
 
@@ -7,9 +7,14 @@
  - Moment
  - Postman 
  - Swagger para documentación
+ - Jsonwebtoken para autorizaciones
+ - Crypto para codificar las contraseñas
+ - Sequelize/Mariadb para base de datos relacional
+ - Helmet para seguridad
+ - Dotenv para variables de entorno
 
 ## Documentación de la API
-Abrir el archivo `spec.yml` y copiar su contenido en [Swagger](https://editor.swagger.io/) o dirigirse a (http://localhost:9091/api-docs/) en su navegador una vez que halla iniciado el servidor y clonado el proyecto.
+Abrir el archivo `spec.yml` y copiar su contenido en [Swagger](https://editor.swagger.io/) o dirigirse a (http://localhost:5000/api-docs/) en su navegador una vez que halla iniciado el servidor y clonado el proyecto.
 
 ### 1  - Clonar el proyecto 
 Clonar el repositorio en el [siguiente link](https://github.com/luisinaescobar/firstsprint.git).
@@ -22,8 +27,8 @@ npm install
 ```
 
 ### 3  - Inicializar el servidor
-Abrir el archivo en `/src/main.js` desde node
-`node main`
+Abrir el archivo en `/src/index.js` desde node
+`node index`
 
 ### 4  - Listo para usar.
 
