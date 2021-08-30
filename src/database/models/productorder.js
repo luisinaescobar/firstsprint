@@ -22,10 +22,6 @@ function createProductOrderModel(connection, Product, Order) {
                 key: 'id'
             }
         },
-        amount: {
-            type: DataTypes.INTEGER,
-          
-        }
     }, {
         // Other model options go here
         modelName: 'productorder',

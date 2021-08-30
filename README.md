@@ -26,10 +26,24 @@ Desde la consola con el siguiente link:
 npm install
 ```
 
-### 3  - Inicializar el servidor
+### 3  - Inicializar la base de datos
+ - Abrir XAMPP y asegurarse que el puerto sobre el cual se está ejecutando es el 3306
+ - Inicializar los servicios de Apache y MySQL
+ - Abrir Admin de MySQL y dirigirse a la base de datos con el nombre luisina.
+
+### 4  - Inicializar el servidor
 Abrir el archivo en `/src/index.js` desde node
 `node index`
 
-### 4  - Listo para usar.
+### 5  - Importante!
+
+Dentro de este archivo se crean objetos de prueba para todas las tablas. El más relevante es el siguiente:
+
+Administrador:
+username: admin
+Email: admin@admin.com
+Contraseña: admin
+
+### 6  - Listo para usar.
 
 Testear los endpoints desde Postman o Swagger para hacer uso de la API.

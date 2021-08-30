@@ -7,9 +7,10 @@ function verifyToken(req, res, next) {
         const bearertoken = bearerHeader.split(" ")[1];
         req.token = bearertoken;
         next();
-    } else {
-        res.sendStatus(403);
+    } else{
+        res.send('You need to add your token to the header with the word Bearer');
     }
+    
 };
 function encript(secret) {
     return createHmac('sha256', secret).digest('hex');

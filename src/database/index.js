@@ -30,8 +30,8 @@ async function connect(host, port, username, password, database) {
   models.Payment.hasOne(models.Order);
   models.Order.belongsTo(models.Payment);
 
-  models.Product.hasOne(models.Order, { through: models.Productorder } );
-  models.Order.belongsTo(models.Product, { through: models.Productorder });
+  models.Product.belongsToMany(models.Order, { through: models.Productorder } );
+  models.Order.belongsToMany(models.Product, { through: models.Productorder });
 
   models.Status.hasOne(models.Order);
   models.Order.belongsTo(models.Status);

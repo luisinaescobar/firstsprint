@@ -55,6 +55,8 @@ function createUserModel(connection) {
             allowNull: true,
             defaultValue: false
         }
+    },{
+        timestamps: false
     });
     return User;
 }

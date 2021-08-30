@@ -1,11 +1,11 @@
 const { Router } = require('express');
 const { getModel } = require('../database');
-const { verifyToken, verifyAdmin, verifySuspend } = require('../middlewares/middlewares');
+const { verifyToken, verifyAdmin } = require('../middlewares/middlewares');
 
 function createPaymentRouter(params) {
     const router = new Router();
 
-    router.get('/payments/', verifyToken, verifySuspend, async (req, res) => {
+    router.get('/payments/', verifyToken, verifyAdmin, async (req, res) => {
         try {
             const data = await getModel('Payment').findAll();
             res.status(200).send(data);

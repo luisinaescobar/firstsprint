@@ -43,13 +43,13 @@ function createUserRouter(params) {
                 where: { email: req.body.email }
             });
             if (mail === null) {
-                const saved = await data.save()
-                res.status(201).send(saved);
+                await data.save()
+                res.status(200).send('Now you can log in.');
             } else {
-                throw new Error('Use another email account');
+                throw res.status(500).send('Use another email account');
             }
         } catch (error) {
-            res.status(500).send({ message: error.message });
+            res.status(500).send('You need to complete all the information.');
         }
     });
     router.post('/login/', async (req, res) => {

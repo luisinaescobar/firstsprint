@@ -9,6 +9,8 @@ function createStatusModel(connection) {
                 notEmpty: true
             }
         },
+    },{
+        timestamps: false
     });
     return Status;
 }

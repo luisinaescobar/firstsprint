@@ -9,6 +9,9 @@ function createPaymentModel(connection) {
                 notEmpty: true
             }
         },
+
+    }, {
+        timestamps: false
     });
     return Payment;
 }

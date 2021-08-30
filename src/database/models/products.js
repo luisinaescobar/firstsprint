@@ -16,6 +16,8 @@ function createProductModel(connection) {
                 notEmpty: true
             }
         }
+    },{
+        timestamps: false
     });
     return Product;
 }
