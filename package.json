@@ -4,7 +4,7 @@
   "description": "",
   "main": "src/main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha",
     "start": "node main.js"
   },
   "author": "",
@@ -19,7 +19,13 @@
     "mariadb": "^2.5.4",
     "moment": "^2.29.1",
     "nodemon": "^2.0.9",
+    "redis": "^3.1.2",
     "sequelize": "^6.6.5",
     "swagger-ui-express": "^4.1.6"
+  },
+  "devDependencies": {
+    "chai": "^4.3.4",
+    "mocha": "^9.1.1",
+    "supertest": "^6.1.6"
   }
 }

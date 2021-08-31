@@ -41,41 +41,39 @@ function createOrderRouter(params) {
         }
     });
     router.post('/orders/', verifyToken, verifySuspend, async (req, res) => {
-        const { JWT_SECRET } = process.env;
+        const { address, products } = req.body;
+        const userId = req.user.mail.id
+        const pay = Number(req.body.PaymentId);
         const Order = getModel('Order');
         const Product = getModel('Product');
         const Payment = getModel('Payment');
         const Status = getModel('Status');
         const User = getModel('User');
-        const { address, quantity, confirmed } = req.body;
-        const pro1 = Number(req.body.ProductId);
-        const pay = Number(req.body.PaymentId);
+        const productorder = getModel('Productorder');
+        const est = await Status.findOne({ where: { id: 1 } });
+        const pagar = await Payment.findOne({ where: { id: pay } });
+        const per = await User.findOne({ where: { id: userId } });
         try {
-            jwt.verify(req.token, JWT_SECRET, async (error, authData) => {
-                if (error) {
-                    res.status(500).send('you need to add your token');
-                } else {
-                    const prod = await Product.findOne({ where: { id: pro1 } });
-                    const est = await Status.findOne({ where: { id: 1 } });
-                    const pagar = await Payment.findOne({ where: { id: pay } });
-                    const per = await User.findOne({ where: { id: authData.mail.id } });
-                    const total = prod.price * quantity;
-                    const order = await Order.create({ quantity, ProductId: prod.id, StatusId: est.id, PaymentId: pagar.id, UserId: per.id, total, address });
-                    order.setProducts([prod]);
-                    if (req.body.confirmed === true) {
-                        Order.update({ confirmed: true }, {where: {
-                            confirmed: false///solo en ese user
-                        }});
-                        //order.update({id: per.id});
-                        order.setProducts([prod]);
-                        await order.save();
-                        //res.status(200).send('Order sent successfully')
-                        res.status(200).send({ order: order, products: prod, username: per.username, email: per.email, address: per.address });
-                    } else {
-                        res.status(404).send(`Don't forget to confirm your order.`);
-                    }
-                }
+            const prods = [];
+            for (product of products) {
+                const prod = await Product.findAll({ where: { id: product.id } });
+                if (!prod) {
+                    res.status(404).send(`Product with ID ${product.id} does not exist.`);
+                } else { prods.push([prod, product.quantity]); }
+
+            }
+            const order = await Order.create({ StatusId: est.id, PaymentId: pagar.id, UserId: per.id, address });
+            for (data of prods) {
+                const [prod, quantity] = data;
+                const total = prod.price * quantity;
+                await productorder.create({ ProductId: prod.id, OrderId: order.id, quantity: quantity, total: total });
+            }
+            const r = await Order.findOne({
+                where: {
+                    id: order.id
+                }, include: [Product]
             });
+            res.json(r);
         } catch (error) {
             res.status(500).send({ message: error.message });
         }
