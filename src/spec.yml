@@ -1,0 +1,651 @@
+openapi: 3.0.1
+title: Sample API
+description: This is a sample server for a restaurant.
+termsOfService: http://example.com/terms/
+contact:
+  name: API Support
+  url: http://www.example.com/support
+  email: support@example.com
+license:
+  name: Apache 2.0
+  url: https://www.apache.org/licenses/LICENSE-2.0.html
+servers:
+  - url: http://localhost:5000/
+    description: Development server
+paths:
+  /signup:
+    post:
+      summary: Creates a user.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/newuser'
+      responses: 
+        '201':
+          description: Created
+        '406':
+          description: Use another email account 
+      tags:
+        - newuser
+  /users:
+    get: 
+      summary: Shows the list of users
+      description: Shows the list of users
+      parameters:
+        - in: header
+          name: Authorization
+          required: true
+          schema:
+            type: integer
+            description: Admin's token with the word Bearer 
+      responses:
+        '200':
+          description: array of users
+          content:
+            application/json:
+              schema: 
+                type: array
+                items: 
+                  type: string
+      tags:
+        - admin
+  /users/{id}:
+    get:
+      description: It allows the admin to see detailed information about a user 
+      summary: shows a user
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            description: user id
+        - in: header
+          name: Authorization
+          required: true
+          schema:
+            type: integer
+            description: Admin's token with the word Bearer
+      responses:
+        '200':
+          description: User
+        '401':
+          description: User with ID  does not exist.
+      tags:
+        - admin
+    put:
+      description: It allows the admin to suspend a user 
+      summary: suspends a user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Suspenduser'
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            description: user id
+        - in: header
+          name: Authorization
+          required: true
+          schema:
+            type: integer
+            description: Admin's token with the word Bearer
+      responses:
+        '200':
+          description: User
+        '401':
+          description: User with ID  does not exist.
+      tags:
+        - admin         
+  /login:
+    post:
+      summary: Initiates user's session
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'          
+      responses:
+        '200':
+          description: Token
+        '401':
+          description: Wrong information
+      tags:
+        - User
+        - admin
+  /products:
+    get:
+      description: Shows all the products
+      summary: Shows producs.
+      parameters:
+        - in: header
+          name: Authorization
+          required: true
+          schema: 
+            type: integer
+            description: User's Token with the word Bearer
+      responses:
+        '200':
+          description: array of products
+          content:
+            application/json:
+              schema: 
+                type: array
+                items: 
+                  type: string
+      tags:
+        - User
+    post:
+      description: It allows the admin to add more products
+      summary: add more products
+      parameters:
+        - in: header
+          name: Authorization
+          required: true
+          schema: 
+            type: integer
+            description: Token with the word Bearer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/addProducts'
+      responses:
+        '200':
+          description: Product
+        '401':
+          description: Could not save the product.
+      tags:
+        - admin
+  /products/{id}:
+    get:
+      description: It allows the admin to see each product
+      summary: Shows a product
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            description: product's id
+        - in: header
+          name: Authorization
+          required: true
+          schema:
+            type: integer
+            description: Token with the word Bearer
+      responses:
+        '200':
+          description: Product
+        '401':
+          description: Product with id  does not exist.
+      tags:
+        - admin
+    put:
+      description: It allows the admin to modify each product
+      summary: edit product
+      parameters: 
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            description: Product's id
+        - in: header
+          name: Authorization
+          required: true
+          schema:
+            type: integer
+            description: Token with the word Bearer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/editProduct'
+      responses:
+        '200':
+          description: Product updated.
+        '403':
+          description: You are not an admin.
+        '404':
+          description: Product with id  does not exist.  
+      tags:
+        - admin
+    delete:
+      description: It allows the admin to delete a product
+      summary: deletes a product
+      parameters: 
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            description: Product's id
+        - in: header
+          name: Authorization
+          required: true
+          schema:
+            type: integer
+            description: Token with the word Bearer
+            required: true
+      responses:
+        '200':
+          description: Product deleted
+        '403':
+          description: You are not an admin.
+        '404':
+          description: Product with id does not exist. 
+      tags:
+        - admin
+  /payments:
+    get:
+      description: Shows all the payments
+      summary: Shows payments.
+      parameters:
+        - in: header
+          name: Authorization
+          required: true
+          schema: 
+            type: integer
+            description: User's Token with the word Bearer
+      responses:
+        '200':
+          description: array of payments
+          content:
+            application/json:
+              schema: 
+                type: array
+                items: 
+                  type: string
+      tags:
+        - User
+    post:
+      description: It allows the admin to add more payments
+      summary: add more payments
+      parameters:
+        - in: header
+          name: Authorization
+          required: true
+          schema: 
+            type: integer
+            description: Token with the word Bearer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/addPayments'
+      responses:
+        '200':
+          description: Payment
+        '401':
+          description: Could not save the payment.
+      tags:
+        - admin
+  /payments/{id}:
+    get:
+      description: It allows the admin to see each payment
+      summary: Shows a payment
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            description: payment's id
+        - in: header
+          name: Authorization
+          required: true
+          schema:
+            type: integer
+            description: Token with the word Bearer
+      responses:
+        '200':
+          description: Payment
+        '401':
+          description: Payment with id  does not exist.
+      tags:
+        - admin
+    put:
+      description: It allows the admin to modify each payment
+      summary: edit payment
+      parameters: 
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            description: Payment's id
+        - in: header
+          name: Authorization
+          required: true
+          schema:
+            type: integer
+            description: Token with the word Bearer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/editPayment'
+      responses:
+        '200':
+          description: Payment updated.
+        '403':
+          description: You are not an admin.
+        '404':
+          description: Payment with id  does not exist.  
+      tags:
+        - admin
+    delete:
+      description: It allows the admin to delete a payment
+      summary: deletes a payment
+      parameters: 
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            description: Payment's id
+        - in: header
+          name: Authorization
+          required: true
+          schema:
+            type: integer
+            description: Token with the word Bearer
+            required: true
+      responses:
+        '200':
+          description: Payment deleted
+        '403':
+          description: You are not an admin.
+        '404':
+          description: Payment with id does not exist. 
+      tags:
+        - admin
+  /status:
+    get:
+      description: Shows the status
+      summary: Shows status.
+      responses:
+        '200':
+          description: array of status
+          content:
+            application/json:
+              schema: 
+                type: array
+                items: 
+                  type: string
+      tags:
+        - admin
+    post:
+      description: It allows the admin to add more status
+      summary: add more status
+      parameters:
+        - in: header
+          name: Authorization
+          required: true
+          schema: 
+            type: integer
+            description: Token with the word Bearer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/addStatus'
+      responses:
+        '200':
+          description: Status
+        '401':
+          description: Could not save the Status.
+      tags:
+        - admin
+  /orders:
+    get:
+      description: It shows all orders 
+      summary: Shows orders.
+      parameters:
+        - in: header
+          name: Authorization
+          required: true
+          schema: 
+            type: integer
+            description: Token with the word Bearer
+      responses:
+        '200':
+          description: array of orders
+          content:
+            application/json:
+              schema: 
+                type: array
+                items: 
+                  type: string
+        '404':
+          description: You are not an admin.
+      tags:
+        - admin      
+  /orders/{id}:
+    get:
+      description: It shows an order
+      summary: Shows an order.
+      parameters:
+        - in: header
+          name: Authorization
+          required: true
+          schema: 
+            type: integer
+            description: Token with the word Bearer
+      responses:
+        '200':
+          description: one order
+          content:
+            application/json:
+              schema: 
+                type: array
+                items: 
+                  type: string
+        '404':
+          description: You are not an admin.
+      tags:
+        - admin
+    put:
+      description: It allows the admin to edit the status of an order
+      summary: edits the status of an order
+      parameters: 
+        - in: path 
+          name: id
+          required: true
+          schema:
+            type: integer
+            description: order's id
+        - in: header
+          name: Authorization
+          required: true
+          schema: 
+            type: integer
+            description: Token with the word Bearer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/editOrder'
+      responses:
+        '200':
+          description: Order updated
+        '401':
+          description: Order with id does not exist.
+      tags:
+        - admin
+    delete:
+      description: It allows the admin to delete an order
+      summary: deletes an order
+      parameters: 
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            description: Order's id
+        - in: header
+          name: Authorization
+          required: true
+          schema:
+            type: integer
+            description: admin's Token with the word Bearer
+            required: true
+      responses:
+        '200':
+          description: Order deleted
+        '403':
+          description: You are not an admin.
+        '404':
+          description: Order with id does not exist. 
+      tags:
+        - admin
+  /history:
+    get:
+      description: Shows the user's orders
+      summary: shows orders.
+      parameters:
+        - in: header
+          name: Authorization
+          required: true
+          schema: 
+            type: integer
+            description: user's token with the word Bearer
+      responses:
+        '200':
+          description: array of orders
+          content:
+            application/json:
+              schema: 
+                type: array
+                items: 
+                  type: string
+      tags:
+        - User
+components:
+  schemas:
+    newuser:
+      properties:
+        username: 
+          type: string
+        lastname: 
+          type: string
+        email: 
+          type: string
+        phone: 
+          type: string 
+        address: 
+          type: "string"
+        password: 
+          type: string   
+    User:
+      properties:
+      email:
+        type: string
+      password:
+        type: string
+    Suspenduser:
+      properties:
+        disabled: boolean
+    addProducts:
+      parameters:
+        - in: header
+          name: Authorization
+          required: true
+          schema:
+            type: integer
+            description: Admin's token with the word Bearer
+      properties:
+        name:
+          type: string
+        price:
+          type: integer
+    editProducts:
+      parameters: 
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            description: Product's id
+        - in: header
+          name: Authorization
+          required: true
+          schema:
+            type: integer
+            description: Admin's Token with the word Bearer 
+      properties:
+      name:
+        type: string
+      price:
+        type: integer
+    addPayments:
+      parameters: 
+        - in: header
+          name: Authorization
+          required: true
+          schema:
+            type: integer
+            description: Admin's Token with the word Bearer 
+      properties:
+      name:
+        type: string
+    editPayments:
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            description: Payment's id 
+        - in: header
+          name: Authorization
+          required: true
+          schema:
+            type: integer
+            description: Admin's Token with the word Bearer 
+      properties:
+      name:
+        type: string
+    addStatus:
+      parameters: 
+        - in: header
+          name: Authorization
+          required: true
+          schema:
+            type: integer
+            description: Admin's Token with the word Bearer 
+      properties:
+      name:
+        type: string    
+    editOrder:
+      parameters: 
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            description: Order's id
+        - in: header
+          name: Authorization
+          required: true
+          schema:
+            type: integer
+            description: admin's Token with the word Bearer   
+      properties:
+        status:
+          type: string

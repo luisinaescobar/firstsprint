@@ -1,6 +1,10 @@
 const { Router } = require('express');
 const { getModel } = require('../database');
 const { verifyToken, verifyAdmin, verifySuspend } = require('../middlewares/middlewares');
+const { connect } = require('../database/index');
+const sequelize = connect();
+//const sequelize = require('sequelize');
+//const transaction  = require('sequelize').Transaction;
 const jwt = require('jsonwebtoken');
 function createOrderRouter(params) {
     const router = new Router();
@@ -41,6 +45,7 @@ function createOrderRouter(params) {
         }
     });
     router.post('/orders/', verifyToken, verifySuspend, async (req, res) => {
+        const t = await sequelize.transaction();
         const { address, products } = req.body;
         const userId = req.user.mail.id
         const pay = Number(req.body.PaymentId);
@@ -56,18 +61,19 @@ function createOrderRouter(params) {
         try {
             const prods = [];
             for (product of products) {
-                const prod = await Product.findAll({ where: { id: product.id } });
+                const prod = await Product.findAll({ where: { id: product.id } }, { transaction: t });
                 if (!prod) {
                     res.status(404).send(`Product with ID ${product.id} does not exist.`);
                 } else { prods.push([prod, product.quantity]); }
 
             }
-            const order = await Order.create({ StatusId: est.id, PaymentId: pagar.id, UserId: per.id, address });
+            const order = await Order.create({ StatusId: est.id, PaymentId: pagar.id, UserId: per.id, address }, { transaction: t });
             for (data of prods) {
                 const [prod, quantity] = data;
                 const total = prod.price * quantity;
-                await productorder.create({ ProductId: prod.id, OrderId: order.id, quantity: quantity, total: total });
+                await productorder.create({ ProductId: prod.id, OrderId: order.id, quantity: quantity, total: total }, { transaction: t });
             }
+            await t.commit();
             const r = await Order.findOne({
                 where: {
                     id: order.id
@@ -76,6 +82,7 @@ function createOrderRouter(params) {
             res.json(r);
         } catch (error) {
             res.status(500).send({ message: error.message });
+            await t.rollback();
         }
     });
     router.put('/orders/:id', verifyToken, verifyAdmin, async (req, res) => {
