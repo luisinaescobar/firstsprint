@@ -7,16 +7,18 @@ const { createStatusModel } = require('./models/status');
 const { createProductOrderModel } = require('./models/productorder');
 
 const models = {};
+let connectionS = '';
 async function connect(host, port, username, password, database) {
+
   const connection = new Sequelize({
-    database,
-    username,
-    password,
     host,
     port,
+    username,
+    password,
+    database,
     dialect: 'mariadb'
   });
-  
+
   models.User = createUserModel(connection);
   models.Product = createProductModel(connection);
   models.Payment = createPaymentModel(connection);
@@ -30,7 +32,7 @@ async function connect(host, port, username, password, database) {
   models.Payment.hasOne(models.Order);
   models.Order.belongsTo(models.Payment);
 
-  models.Product.belongsToMany(models.Order, { through: models.Productorder } );
+  models.Product.belongsToMany(models.Order, { through: models.Productorder });
   models.Order.belongsToMany(models.Product, { through: models.Productorder });
 
   models.Status.hasOne(models.Order);
@@ -45,7 +47,7 @@ async function connect(host, port, username, password, database) {
   try {
     await connection.authenticate();
     await connection.sync();
-
+    connectionS = connection;
     console.log('connection has been established successfully');
     return true;
   } catch (error) {
@@ -53,7 +55,9 @@ async function connect(host, port, username, password, database) {
     return false;
   }
 }
-
+function getConnection(){
+  return connectionS;
+}
 function getModel(name) {
   console.log(models)
   if (models[name]) {
@@ -65,5 +69,5 @@ function getModel(name) {
 }
 
 module.exports = {
-  connect, getModel
+  connect, getModel, getConnection
 };

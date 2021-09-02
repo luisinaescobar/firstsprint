@@ -1,5 +1,6 @@
 const { Sequelize, DataTypes } = require('sequelize');
 
+
 function createProductOrderModel(connection, Product, Order) {
     const Productorder = connection.define('Productorder', {
         ProductId: {

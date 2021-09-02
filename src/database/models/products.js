@@ -1,5 +1,4 @@
 const { Sequelize, DataTypes, ValidationError } = require('sequelize');
-
 function createProductModel(connection) {
     const Product = connection.define('Product', {
         name: {

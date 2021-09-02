@@ -1,5 +1,4 @@
 const { Sequelize, DataTypes, ValidationError } = require('sequelize');
-
 function createStatusModel(connection) {
     const Status = connection.define('Status', {
         name: {

@@ -6,7 +6,7 @@ function createOrderModel(connection) {
             type: DataTypes.STRING,
         },
     });
-    
+
     return Order;
 }
 

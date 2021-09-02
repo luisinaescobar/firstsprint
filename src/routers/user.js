@@ -44,12 +44,12 @@ function createUserRouter(params) {
             });
             if (mail === null) {
                 await data.save()
-                res.status(200).send('Now you can log in.');
+                res.status(201).json('Now you can log in.');
             } else {
-                throw res.status(500).send('Use another email account');
+                throw res.status(403).send('Use another email account');
             }
         } catch (error) {
-            res.status(500).send('You need to complete all the information.');
+            res.status(417).send('You need to complete all the information.');
         }
     });
     router.post('/login/', async (req, res) => {
