@@ -69,8 +69,6 @@ function createOrderRouter(params) {
             const order = await Order.create({ StatusId: est.id, PaymentId: pagar.id, UserId: per.id, address }, { transaction: t });
             for (data of prods) {
                 const [prod, quantity] = data;
-                console.log(prod[0].dataValues)
-                console.log(quantity)
                 const total = prod[0].dataValues.price * quantity;
                 await productorder.create({ ProductId: prod[0].dataValues.id, OrderId: order.id, quantity: quantity, total: total }, { transaction: t });
             }
@@ -83,7 +81,6 @@ function createOrderRouter(params) {
             res.json(r);
         } catch (error) {
             await t.rollback();
-            //console.log(error);
             res.status(500).send({ message: error.message });
         }
     });

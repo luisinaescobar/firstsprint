@@ -10,7 +10,7 @@ license:
   name: Apache 2.0
   url: https://www.apache.org/licenses/LICENSE-2.0.html
 servers:
-  - url: http://localhost:5000/
+  - url: http://localhost:5000/api/v1
     description: Development server
 paths:
   /signup:
@@ -24,22 +24,17 @@ paths:
               $ref: '#/components/schemas/newuser'
       responses: 
         '201':
-          description: Created
-        '406':
+          description: Now you can log in.
+        '403':
           description: Use another email account 
       tags:
         - newuser
   /users:
     get: 
+      security:
+        - bearerAuth: []
       summary: Shows the list of users
       description: Shows the list of users
-      parameters:
-        - in: header
-          name: Authorization
-          required: true
-          schema:
-            type: integer
-            description: Admin's token with the word Bearer 
       responses:
         '200':
           description: array of users
@@ -53,6 +48,8 @@ paths:
         - admin
   /users/{id}:
     get:
+      security:
+        - bearerAuth: []
       description: It allows the admin to see detailed information about a user 
       summary: shows a user
       parameters:
@@ -62,12 +59,6 @@ paths:
           schema:
             type: integer
             description: user id
-        - in: header
-          name: Authorization
-          required: true
-          schema:
-            type: integer
-            description: Admin's token with the word Bearer
       responses:
         '200':
           description: User
@@ -76,14 +67,10 @@ paths:
       tags:
         - admin
     put:
+      security:
+        - bearerAuth: []
       description: It allows the admin to suspend a user 
       summary: suspends a user
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Suspenduser'
       parameters:
         - in: path
           name: id
@@ -91,12 +78,12 @@ paths:
           schema:
             type: integer
             description: user id
-        - in: header
-          name: Authorization
-          required: true
-          schema:
-            type: integer
-            description: Admin's token with the word Bearer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Suspenduser'
       responses:
         '200':
           description: User
@@ -123,15 +110,10 @@ paths:
         - admin
   /products:
     get:
+      security:
+        - bearerAuth: []
       description: Shows all the products
       summary: Shows producs.
-      parameters:
-        - in: header
-          name: Authorization
-          required: true
-          schema: 
-            type: integer
-            description: User's Token with the word Bearer
       responses:
         '200':
           description: array of products
@@ -144,15 +126,10 @@ paths:
       tags:
         - User
     post:
+      security:
+        - bearerAuth: []
       description: It allows the admin to add more products
       summary: add more products
-      parameters:
-        - in: header
-          name: Authorization
-          required: true
-          schema: 
-            type: integer
-            description: Token with the word Bearer
       requestBody:
         required: true
         content:
@@ -168,6 +145,8 @@ paths:
         - admin
   /products/{id}:
     get:
+      security:
+        - bearerAuth: []
       description: It allows the admin to see each product
       summary: Shows a product
       parameters:
@@ -177,12 +156,6 @@ paths:
           schema:
             type: integer
             description: product's id
-        - in: header
-          name: Authorization
-          required: true
-          schema:
-            type: integer
-            description: Token with the word Bearer
       responses:
         '200':
           description: Product
@@ -191,6 +164,8 @@ paths:
       tags:
         - admin
     put:
+      security:
+        - bearerAuth: []
       description: It allows the admin to modify each product
       summary: edit product
       parameters: 
@@ -200,12 +175,6 @@ paths:
           schema:
             type: integer
             description: Product's id
-        - in: header
-          name: Authorization
-          required: true
-          schema:
-            type: integer
-            description: Token with the word Bearer
       requestBody:
         required: true
         content:
@@ -222,6 +191,8 @@ paths:
       tags:
         - admin
     delete:
+      security:
+        - bearerAuth: []
       description: It allows the admin to delete a product
       summary: deletes a product
       parameters: 
@@ -231,13 +202,6 @@ paths:
           schema:
             type: integer
             description: Product's id
-        - in: header
-          name: Authorization
-          required: true
-          schema:
-            type: integer
-            description: Token with the word Bearer
-            required: true
       responses:
         '200':
           description: Product deleted
@@ -249,15 +213,10 @@ paths:
         - admin
   /payments:
     get:
+      security:
+        - bearerAuth: []
       description: Shows all the payments
       summary: Shows payments.
-      parameters:
-        - in: header
-          name: Authorization
-          required: true
-          schema: 
-            type: integer
-            description: User's Token with the word Bearer
       responses:
         '200':
           description: array of payments
@@ -270,15 +229,10 @@ paths:
       tags:
         - User
     post:
+      security:
+        - bearerAuth: []
       description: It allows the admin to add more payments
       summary: add more payments
-      parameters:
-        - in: header
-          name: Authorization
-          required: true
-          schema: 
-            type: integer
-            description: Token with the word Bearer
       requestBody:
         required: true
         content:
@@ -294,6 +248,8 @@ paths:
         - admin
   /payments/{id}:
     get:
+      security:
+        - bearerAuth: []
       description: It allows the admin to see each payment
       summary: Shows a payment
       parameters:
@@ -303,12 +259,6 @@ paths:
           schema:
             type: integer
             description: payment's id
-        - in: header
-          name: Authorization
-          required: true
-          schema:
-            type: integer
-            description: Token with the word Bearer
       responses:
         '200':
           description: Payment
@@ -317,6 +267,8 @@ paths:
       tags:
         - admin
     put:
+      security:
+        - bearerAuth: []
       description: It allows the admin to modify each payment
       summary: edit payment
       parameters: 
@@ -326,12 +278,6 @@ paths:
           schema:
             type: integer
             description: Payment's id
-        - in: header
-          name: Authorization
-          required: true
-          schema:
-            type: integer
-            description: Token with the word Bearer
       requestBody:
         required: true
         content:
@@ -348,6 +294,8 @@ paths:
       tags:
         - admin
     delete:
+      security:
+        - bearerAuth: []
       description: It allows the admin to delete a payment
       summary: deletes a payment
       parameters: 
@@ -357,13 +305,6 @@ paths:
           schema:
             type: integer
             description: Payment's id
-        - in: header
-          name: Authorization
-          required: true
-          schema:
-            type: integer
-            description: Token with the word Bearer
-            required: true
       responses:
         '200':
           description: Payment deleted
@@ -375,6 +316,8 @@ paths:
         - admin
   /status:
     get:
+      security:
+        - bearerAuth: []
       description: Shows the status
       summary: Shows status.
       responses:
@@ -389,15 +332,10 @@ paths:
       tags:
         - admin
     post:
+      security:
+        - bearerAuth: []
       description: It allows the admin to add more status
       summary: add more status
-      parameters:
-        - in: header
-          name: Authorization
-          required: true
-          schema: 
-            type: integer
-            description: Token with the word Bearer
       requestBody:
         required: true
         content:
@@ -412,16 +350,29 @@ paths:
       tags:
         - admin
   /orders:
+    post:
+      security:
+        - bearerAuth: []
+      description: It allows the user to make an order
+      summary: add products to the order 
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/addProductOrder'
+      responses:
+        '201':
+          description: Order
+        '500':
+          description: Could not send the order.
+      tags:
+        - User
     get:
+      security:
+        - bearerAuth: []
       description: It shows all orders 
       summary: Shows orders.
-      parameters:
-        - in: header
-          name: Authorization
-          required: true
-          schema: 
-            type: integer
-            description: Token with the word Bearer
       responses:
         '200':
           description: array of orders
@@ -437,15 +388,17 @@ paths:
         - admin      
   /orders/{id}:
     get:
+      security:
+        - bearerAuth: []
       description: It shows an order
       summary: Shows an order.
       parameters:
-        - in: header
-          name: Authorization
+        - in: path
+          name: id
           required: true
-          schema: 
+          schema:
             type: integer
-            description: Token with the word Bearer
+            description: order's id
       responses:
         '200':
           description: one order
@@ -460,6 +413,8 @@ paths:
       tags:
         - admin
     put:
+      security:
+        - bearerAuth: []
       description: It allows the admin to edit the status of an order
       summary: edits the status of an order
       parameters: 
@@ -469,12 +424,6 @@ paths:
           schema:
             type: integer
             description: order's id
-        - in: header
-          name: Authorization
-          required: true
-          schema: 
-            type: integer
-            description: Token with the word Bearer
       requestBody:
         required: true
         content:
@@ -489,6 +438,8 @@ paths:
       tags:
         - admin
     delete:
+      security:
+        - bearerAuth: []
       description: It allows the admin to delete an order
       summary: deletes an order
       parameters: 
@@ -498,13 +449,6 @@ paths:
           schema:
             type: integer
             description: Order's id
-        - in: header
-          name: Authorization
-          required: true
-          schema:
-            type: integer
-            description: admin's Token with the word Bearer
-            required: true
       responses:
         '200':
           description: Order deleted
@@ -516,15 +460,10 @@ paths:
         - admin
   /history:
     get:
+      security:
+        - bearerAuth: []
       description: Shows the user's orders
       summary: shows orders.
-      parameters:
-        - in: header
-          name: Authorization
-          required: true
-          schema: 
-            type: integer
-            description: user's token with the word Bearer
       responses:
         '200':
           description: array of orders
@@ -537,6 +476,11 @@ paths:
       tags:
         - User
 components:
+  securitySchemes:
+    bearerAuth:            # arbitrary name for the security scheme
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
   schemas:
     newuser:
       properties:
@@ -545,30 +489,31 @@ components:
         lastname: 
           type: string
         email: 
-          type: string
+          type: email
         phone: 
-          type: string 
+          type: integer 
         address: 
           type: "string"
         password: 
           type: string   
     User:
       properties:
-      email:
-        type: string
-      password:
-        type: string
+        email:
+          type: string
+        password:
+          type: string
     Suspenduser:
-      properties:
-        disabled: boolean
-    addProducts:
-      parameters:
-        - in: header
-          name: Authorization
+      parameters: 
+        - in: path
+          name: id
           required: true
           schema:
             type: integer
-            description: Admin's token with the word Bearer
+            description: User's id
+      properties:
+        disabled: 
+          type: boolean
+    addProducts:
       properties:
         name:
           type: string
@@ -582,12 +527,6 @@ components:
           schema:
             type: integer
             description: Product's id
-        - in: header
-          name: Authorization
-          required: true
-          schema:
-            type: integer
-            description: Admin's Token with the word Bearer 
       properties:
       name:
         type: string
@@ -639,13 +578,24 @@ components:
           required: true
           schema:
             type: integer
-            description: Order's id
-        - in: header
-          name: Authorization
-          required: true
-          schema:
-            type: integer
-            description: admin's Token with the word Bearer   
+            description: Order's id  
       properties:
-        status:
+        StatusId:
           type: string
+    addProductOrder:
+      properties:
+        address:
+          type: string
+        PaymentId:
+          type: integer
+        
+        products:
+          type: array
+          properties:
+            id:
+              type: integer
+              description: product id
+            quantity:
+              type: integer
+              description: number of products
+
