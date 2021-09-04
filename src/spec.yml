@@ -359,7 +359,7 @@ paths:
         required: true
         content:
           application/json:
-            schemas:
+            schema:
               $ref: '#/components/schemas/addProductOrder'
       responses:
         '201':
