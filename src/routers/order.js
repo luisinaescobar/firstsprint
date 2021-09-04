@@ -57,13 +57,15 @@ function createOrderRouter(params) {
         const est = await Status.findOne({ where: { id: 1 } });
         const pagar = await Payment.findOne({ where: { id: pay } });
         const per = await User.findOne({ where: { id: userId } });
-        
+
         try {
             const prods = [];
             for (product of products) {
                 const prod = await Product.findAll({ where: { id: product.id } }, { transaction: t });
                 if (!prod) {
+
                     res.status(404).send(`Product with ID ${product.id} does not exist.`);
+
                 } else { prods.push([prod, product.quantity]); }
             }
             const order = await Order.create({ StatusId: est.id, PaymentId: pagar.id, UserId: per.id, address }, { transaction: t });
@@ -81,7 +83,7 @@ function createOrderRouter(params) {
             res.json(r);
         } catch (error) {
             await t.rollback();
-            res.status(500).send({ message: error.message });
+            res.status(500).send('One of the products does not exist. Please check the menu.');
         }
     });
     router.put('/orders/:id', verifyToken, verifyAdmin, async (req, res) => {

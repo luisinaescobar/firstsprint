@@ -359,7 +359,7 @@ paths:
         required: true
         content:
           application/json:
-            schema:
+            schemas:
               $ref: '#/components/schemas/addProductOrder'
       responses:
         '201':
@@ -493,7 +493,7 @@ components:
         phone: 
           type: integer 
         address: 
-          type: "string"
+          type: string
         password: 
           type: string   
     User:
@@ -581,21 +581,23 @@ components:
             description: Order's id  
       properties:
         StatusId:
-          type: string
+          type: integer
     addProductOrder:
       properties:
         address:
           type: string
         PaymentId:
           type: integer
-        
         products:
           type: array
-          properties:
-            id:
-              type: integer
-              description: product id
-            quantity:
-              type: integer
-              description: number of products
-
+          items: 
+            properties:
+              id:
+                type: integer
+                description: product id
+              quantity:
+                type: integer
+                description: number of products
+            example: 
+              id: 1
+              quantity: 2
