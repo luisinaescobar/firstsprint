@@ -8,7 +8,7 @@ const helmet = require('helmet');
 const swaggerUi = require('swagger-ui-express');
 const yaml = require('js-yaml');
 const fs = require('fs');
-
+const { makeRouter: makeUsersRouter } = require('../test/usersTest');
 function loadSwaggerinfo(server) {
     try {
         const doc = yaml.load(fs.readFileSync('./src/spec.yml', 'utf8'));
@@ -27,6 +27,7 @@ function makeServer() {
     server.use('/api/v1', createPaymentRouter());
     server.use('/api/v1', createOrderRouter());
     server.use('/api/v1', createStatusRouter());
+    server.use('/api/v1/userstest', makeUsersRouter());
     loadSwaggerinfo(server);
     return server;
 }

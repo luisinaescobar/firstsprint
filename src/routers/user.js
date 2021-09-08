@@ -49,7 +49,9 @@ function createUserRouter(params) {
                 throw res.status(403).send('Use another email account');
             }
         } catch (error) {
-            res.status(417).send('You need to complete all the information.');
+            const msj = error.message
+            console.log(msj);
+            res.status(417).send('You need to complete all the information.'+ msj);
         }
     });
     router.post('/login/', async (req, res) => {
@@ -63,7 +65,7 @@ function createUserRouter(params) {
             });
             if (mail !== null) {
                 jwt.sign({
-                   mail
+                    mail
                 }
                     , JWT_SECRET, (err, token) => {
                         res.json({ token })

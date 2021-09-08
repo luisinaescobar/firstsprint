@@ -63,7 +63,7 @@ function getModel(name) {
   if (models[name]) {
     return models[name];
   } else {
-    console.error('Model does not exist');
+   // console.error('Model does not exist');
     return null
   }
 }

@@ -3,7 +3,7 @@ const { getModel } = require('../database');
 const { verifyToken, verifyAdmin, verifySuspend } = require('../middlewares/middlewares');
 const jwt = require('jsonwebtoken');
 const { getConnection } = require('../database/index');
-//const sequelize = getConnection();
+
 function createOrderRouter(params) {
     const router = new Router();
 
