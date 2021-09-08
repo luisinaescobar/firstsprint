@@ -180,7 +180,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/editProduct'
+              $ref: '#/components/schemas/editProducts'
       responses:
         '200':
           description: Product updated.
@@ -283,7 +283,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/editPayment'
+              $ref: '#/components/schemas/editPayments'
       responses:
         '200':
           description: Payment updated.
@@ -528,21 +528,14 @@ components:
             type: integer
             description: Product's id
       properties:
-      name:
-        type: string
-      price:
-        type: integer
+        name:
+          type: string
+        price:
+          type: integer
     addPayments:
-      parameters: 
-        - in: header
-          name: Authorization
-          required: true
-          schema:
-            type: integer
-            description: Admin's Token with the word Bearer 
       properties:
-      name:
-        type: string
+        name:
+          type: string
     editPayments:
       parameters:
         - in: path
@@ -551,26 +544,13 @@ components:
           schema:
             type: integer
             description: Payment's id 
-        - in: header
-          name: Authorization
-          required: true
-          schema:
-            type: integer
-            description: Admin's Token with the word Bearer 
       properties:
-      name:
-        type: string
+        name:
+          type: string
     addStatus:
-      parameters: 
-        - in: header
-          name: Authorization
-          required: true
-          schema:
-            type: integer
-            description: Admin's Token with the word Bearer 
       properties:
-      name:
-        type: string    
+        name:
+          type: string    
     editOrder:
       parameters: 
         - in: path
