@@ -27,9 +27,16 @@ npm install
 ```
 
 ### 3  - Inicializar la base de datos
- - Abrir XAMPP y asegurarse que el puerto sobre el cual se está ejecutando es el 3306
- - Inicializar los servicios de Apache y MySQL
- - Abrir Admin de MySQL y dirigirse a la base de datos con el nombre luisina.
+ - Iniciar una base de datos con MYsql o Mariadb.
+ - Agregar a las variables de entorno las variables expecificadas a continuacion:   
+    * PORT: numero de puerto usado para arrancar el servidor
+    * DB_USERNAME: nombre de usuario de la base de datos
+    * DB_PASSWORD: contraseña de base de datos
+    * DB_NAME: nombre de la base de datos
+    * DB_PORT: puerto usado por la base de datos
+    * DB_HOST: host en el cual se encuentra la base de datos
+    * JWT_SECRET: password para encriptar datos de JWT
+
 
 ### 4  - Inicializar el servidor
 Abrir el archivo en `/src/index.js` desde node
