@@ -1,7 +1,5 @@
 const { expect } = require('chai');
-const sinon = require('sinon');
 const request = require('supertest');
-const database = require('../src/database');
 const { makeServer } = require('../src/server');
 
 describe('API Sign up test', () => {
