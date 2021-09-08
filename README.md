@@ -44,6 +44,11 @@ username: admin
 Email: admin@admin.com
 Contraseña: admin
 
-### 6  - Listo para usar.
+### 6  - Testing
+```
+npm test
+```
+
+### 7  - Listo para usar.
 
 Testear los endpoints desde Postman o Swagger para hacer uso de la API.
