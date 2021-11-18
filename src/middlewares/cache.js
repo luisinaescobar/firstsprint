@@ -1,5 +1,6 @@
 const redis = require('redis');
-const client = redis.createClient();
+const client = redis.createClient({ host: 'myfirstcluster.ek96ql.0001.sae1.cache.amazonaws.com'
+});
 
 client.on('error', (error) => {
     console.error(error);

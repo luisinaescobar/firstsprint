@@ -22,12 +22,12 @@ function makeServer() {
     server.use(express.json());
     server.use(express.urlencoded({ extended: false }));
     server.use(helmet());
-    server.use('/api/v1', createProductRouter());
-    server.use('/api/v1', createUserRouter());
-    server.use('/api/v1', createPaymentRouter());
-    server.use('/api/v1', createOrderRouter());
-    server.use('/api/v1', createStatusRouter());
-    server.use('/api/v1/userstest', makeUsersRouter());
+    server.use('/v1', createProductRouter());
+    server.use('/v1', createUserRouter());
+    server.use('/v1', createPaymentRouter());
+    server.use('/v1', createOrderRouter());
+    server.use('/v1', createStatusRouter());
+    server.use('/v1/userstest', makeUsersRouter());
     loadSwaggerinfo(server);
     return server;
 }

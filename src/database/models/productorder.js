@@ -6,20 +6,14 @@ function createProductOrderModel(connection, Product, Order) {
         ProductId: {
             type: DataTypes.INTEGER,
             references: {
-
                 model: Product,
-
-                // This is the column name of the referenced model
                 key: 'id'
             }
         },
         OrderId: {
             type: DataTypes.INTEGER,
             references: {
-                // This is a reference to another model
                 model: Order,
-
-                // This is the column name of the referenced model
                 key: 'id'
             }
         },
