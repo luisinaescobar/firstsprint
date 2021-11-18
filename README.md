@@ -1,6 +1,6 @@
-# Sprint Project 2
+# Sprint Project 3
 
-## Recursos y tecnologias aplicadas
+## Recursos y tecnologias aplicadas en Node
 
  - Nodemon
  - Express
@@ -13,6 +13,18 @@
  - Helmet para seguridad
  - Dotenv para variables de entorno
 
+## Recursos y tecnologias aplicadas en Amazon Web services
+
+ - Load Balancer
+ - Elasticache
+ - RDS
+ - Auto Scaling 
+ - S3
+ - CloudFront
+ - EC2
+ - NGINX
+ - PM2
+
 ## Documentación de la API
 Abrir el archivo `spec.yml` y copiar su contenido en [Swagger](https://editor.swagger.io/) o dirigirse a (http://localhost:5000/api-docs/) en su navegador una vez que halla iniciado el servidor y clonado el proyecto.
 
@@ -21,41 +33,52 @@ Clonar el repositorio en el [siguiente link](https://github.com/luisinaescobar/f
 Desde la consola con el siguiente link:
 `gh repo clone luisinaescobar/firstsprint`
 
-### 2  - Instalacion de dependencias
+### 2  - Ingreso a la consola de AWS
+
+Nombre de usuario:
+Contraseña: 
+Numero de 12 digitos: 
+
+### 3  - Inicializar la instancia
+
+ - Conectarse a la instancia.
+
+ - Pegar el comando de ssh para conectarse a la misma desde una consola, utilizando el archivo miclave.pem para poder ingresar.
+
+ - Una vez en la consola escribir los siguientes comandos para inicializar NGINX.
+
+ ```
+sudo su
 ```
-npm install
 ```
+nginx
+```
+ - Luego salir con Crl D
 
-### 3  - Inicializar la base de datos
- - Iniciar una base de datos con MYsql o Mariadb.
- - Agregar a las variables de entorno las variables expecificadas a continuacion:   
-    * PORT: numero de puerto usado para arrancar el servidor
-    * DB_USERNAME: nombre de usuario de la base de datos
-    * DB_PASSWORD: contraseña de base de datos
-    * DB_NAME: nombre de la base de datos
-    * DB_PORT: puerto usado por la base de datos
-    * DB_HOST: host en el cual se encuentra la base de datos
-    * JWT_SECRET: password para encriptar datos de JWT
+ - Luego dar inicio a la API dirigiendose a api/firstsprint-master
 
+```
+cd api/firstsprint-master/
+```
+y corriendolo en PM2
 
-### 4  - Inicializar el servidor
-Abrir el archivo en `/src/index.js` desde node
-`node index`
+```
+ pm2 start ecosystem.config.js --env dev
+```
+- Luego podra visualizar la pagina de inicio dirigiendose a el dominio https://www.madariaga.tk
 
-### 5  - Importante!
+- Para tener contacto con la API puede dirigirse a el endpoint https://www.madariaga.tk/api/v1/products o puede probarlo en Postman si asi lo desea.
 
-Dentro de este archivo se crean objetos de prueba para todas las tablas. El más relevante es el siguiente:
+### 4  - Importante!
+
+Si desea probar la API estas son las cedenciales de el admin.
 
 Administrador:
 username: admin
 Email: admin@admin.com
 Contraseña: admin
 
-### 6  - Testing
-```
-npm test
-```
 
-### 7  - Listo para usar.
+### 5  - Listo para usar.
 
-Testear los endpoints desde Postman o Swagger para hacer uso de la API.
+Testear los endpoints desde Postman.
