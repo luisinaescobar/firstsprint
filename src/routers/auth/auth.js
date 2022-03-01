@@ -21,9 +21,8 @@ passport.use(new Auth0Strategy({
 }, (accessToken, refreshToken, extraParams, profile, done) => {
     if (profile) {
         console.log(profile)
-        profile1 = findCreateUser(profile)
-        console.log("hola1")
-        console.log(profile1)
+        findCreateUser(profile)
+        profile1 = profile
         return done(null, profile);
     } else {
         return done(new Error('profile does not exist'));

@@ -89,12 +89,12 @@ function createUserRouter(params) {
     router.get('/token/', async (req, res) => {
         try {
             const profile = getProfile();
+            const mail = await getModel('User').findOne({
+                where: { idProvider: profile.id }
+            });
             const { JWT_SECRET } = process.env;
-            console.log('hola2')
-            console.log(profile)
-            console.log(profile.User.dataValues)
-            if (profile.User.dataValues !== null) {
-                jwt.sign({ profile }, JWT_SECRET, (err, token) => { res.json({ token }) });
+            if (mail !== null) {
+                jwt.sign({ mail }, JWT_SECRET, (err, token) => { res.json({ token }) });
             } else {
                 throw new Error('Wrong information');
             }
