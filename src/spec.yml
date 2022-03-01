@@ -1,0 +1,583 @@
+openapi: 3.0.1
+title: Sample API
+description: This is a sample server for a restaurant.
+termsOfService: http://example.com/terms/
+contact:
+  name: API Support
+  url: http://www.example.com/support
+  email: support@example.com
+license:
+  name: Apache 2.0
+  url: https://www.apache.org/licenses/LICENSE-2.0.html
+servers:
+  - url: http://localhost:5000/api/v1
+    description: Development server
+paths:
+  /signup:
+    post:
+      summary: Creates a user.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/newuser'
+      responses: 
+        '201':
+          description: Now you can log in.
+        '403':
+          description: Use another email account 
+      tags:
+        - newuser
+  /users:
+    get: 
+      security:
+        - bearerAuth: []
+      summary: Shows the list of users
+      description: Shows the list of users
+      responses:
+        '200':
+          description: array of users
+          content:
+            application/json:
+              schema: 
+                type: array
+                items: 
+                  type: string
+      tags:
+        - admin
+  /users/{id}:
+    get:
+      security:
+        - bearerAuth: []
+      description: It allows the admin to see detailed information about a user 
+      summary: shows a user
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            description: user id
+      responses:
+        '200':
+          description: User
+        '401':
+          description: User with ID  does not exist.
+      tags:
+        - admin
+    put:
+      security:
+        - bearerAuth: []
+      description: It allows the admin to suspend a user 
+      summary: suspends a user
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            description: user id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Suspenduser'
+      responses:
+        '200':
+          description: User
+        '401':
+          description: User with ID  does not exist.
+      tags:
+        - admin         
+  /login:
+    post:
+      summary: Initiates user's session
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'          
+      responses:
+        '200':
+          description: Token
+        '401':
+          description: Wrong information
+      tags:
+        - User
+        - admin
+  /products:
+    get:
+      security:
+        - bearerAuth: []
+      description: Shows all the products
+      summary: Shows producs.
+      responses:
+        '200':
+          description: array of products
+          content:
+            application/json:
+              schema: 
+                type: array
+                items: 
+                  type: string
+      tags:
+        - User
+    post:
+      security:
+        - bearerAuth: []
+      description: It allows the admin to add more products
+      summary: add more products
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/addProducts'
+      responses:
+        '200':
+          description: Product
+        '401':
+          description: Could not save the product.
+      tags:
+        - admin
+  /products/{id}:
+    get:
+      security:
+        - bearerAuth: []
+      description: It allows the admin to see each product
+      summary: Shows a product
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            description: product's id
+      responses:
+        '200':
+          description: Product
+        '401':
+          description: Product with id  does not exist.
+      tags:
+        - admin
+    put:
+      security:
+        - bearerAuth: []
+      description: It allows the admin to modify each product
+      summary: edit product
+      parameters: 
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            description: Product's id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/editProducts'
+      responses:
+        '200':
+          description: Product updated.
+        '403':
+          description: You are not an admin.
+        '404':
+          description: Product with id  does not exist.  
+      tags:
+        - admin
+    delete:
+      security:
+        - bearerAuth: []
+      description: It allows the admin to delete a product
+      summary: deletes a product
+      parameters: 
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            description: Product's id
+      responses:
+        '200':
+          description: Product deleted
+        '403':
+          description: You are not an admin.
+        '404':
+          description: Product with id does not exist. 
+      tags:
+        - admin
+  /payments:
+    get:
+      security:
+        - bearerAuth: []
+      description: Shows all the payments
+      summary: Shows payments.
+      responses:
+        '200':
+          description: array of payments
+          content:
+            application/json:
+              schema: 
+                type: array
+                items: 
+                  type: string
+      tags:
+        - User
+    post:
+      security:
+        - bearerAuth: []
+      description: It allows the admin to add more payments
+      summary: add more payments
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/addPayments'
+      responses:
+        '200':
+          description: Payment
+        '401':
+          description: Could not save the payment.
+      tags:
+        - admin
+  /payments/{id}:
+    get:
+      security:
+        - bearerAuth: []
+      description: It allows the admin to see each payment
+      summary: Shows a payment
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            description: payment's id
+      responses:
+        '200':
+          description: Payment
+        '401':
+          description: Payment with id  does not exist.
+      tags:
+        - admin
+    put:
+      security:
+        - bearerAuth: []
+      description: It allows the admin to modify each payment
+      summary: edit payment
+      parameters: 
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            description: Payment's id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/editPayments'
+      responses:
+        '200':
+          description: Payment updated.
+        '403':
+          description: You are not an admin.
+        '404':
+          description: Payment with id  does not exist.  
+      tags:
+        - admin
+    delete:
+      security:
+        - bearerAuth: []
+      description: It allows the admin to delete a payment
+      summary: deletes a payment
+      parameters: 
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            description: Payment's id
+      responses:
+        '200':
+          description: Payment deleted
+        '403':
+          description: You are not an admin.
+        '404':
+          description: Payment with id does not exist. 
+      tags:
+        - admin
+  /status:
+    get:
+      security:
+        - bearerAuth: []
+      description: Shows the status
+      summary: Shows status.
+      responses:
+        '200':
+          description: array of status
+          content:
+            application/json:
+              schema: 
+                type: array
+                items: 
+                  type: string
+      tags:
+        - admin
+    post:
+      security:
+        - bearerAuth: []
+      description: It allows the admin to add more status
+      summary: add more status
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/addStatus'
+      responses:
+        '200':
+          description: Status
+        '401':
+          description: Could not save the Status.
+      tags:
+        - admin
+  /orders:
+    post:
+      security:
+        - bearerAuth: []
+      description: It allows the user to make an order
+      summary: add products to the order 
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/addProductOrder'
+      responses:
+        '201':
+          description: Order
+        '500':
+          description: Could not send the order.
+      tags:
+        - User
+    get:
+      security:
+        - bearerAuth: []
+      description: It shows all orders 
+      summary: Shows orders.
+      responses:
+        '200':
+          description: array of orders
+          content:
+            application/json:
+              schema: 
+                type: array
+                items: 
+                  type: string
+        '404':
+          description: You are not an admin.
+      tags:
+        - admin      
+  /orders/{id}:
+    get:
+      security:
+        - bearerAuth: []
+      description: It shows an order
+      summary: Shows an order.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            description: order's id
+      responses:
+        '200':
+          description: one order
+          content:
+            application/json:
+              schema: 
+                type: array
+                items: 
+                  type: string
+        '404':
+          description: You are not an admin.
+      tags:
+        - admin
+    put:
+      security:
+        - bearerAuth: []
+      description: It allows the admin to edit the status of an order
+      summary: edits the status of an order
+      parameters: 
+        - in: path 
+          name: id
+          required: true
+          schema:
+            type: integer
+            description: order's id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/editOrder'
+      responses:
+        '200':
+          description: Order updated
+        '401':
+          description: Order with id does not exist.
+      tags:
+        - admin
+    delete:
+      security:
+        - bearerAuth: []
+      description: It allows the admin to delete an order
+      summary: deletes an order
+      parameters: 
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            description: Order's id
+      responses:
+        '200':
+          description: Order deleted
+        '403':
+          description: You are not an admin.
+        '404':
+          description: Order with id does not exist. 
+      tags:
+        - admin
+  /history:
+    get:
+      security:
+        - bearerAuth: []
+      description: Shows the user's orders
+      summary: shows orders.
+      responses:
+        '200':
+          description: array of orders
+          content:
+            application/json:
+              schema: 
+                type: array
+                items: 
+                  type: string
+      tags:
+        - User
+components:
+  securitySchemes:
+    bearerAuth:            # arbitrary name for the security scheme
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    newuser:
+      properties:
+        username: 
+          type: string
+        lastname: 
+          type: string
+        email: 
+          type: email
+        phone: 
+          type: integer 
+        address: 
+          type: string
+        password: 
+          type: string   
+    User:
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+    Suspenduser:
+      parameters: 
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            description: User's id
+      properties:
+        disabled: 
+          type: boolean
+    addProducts:
+      properties:
+        name:
+          type: string
+        price:
+          type: integer
+    editProducts:
+      parameters: 
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            description: Product's id
+      properties:
+        name:
+          type: string
+        price:
+          type: integer
+    addPayments:
+      properties:
+        name:
+          type: string
+    editPayments:
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            description: Payment's id 
+      properties:
+        name:
+          type: string
+    addStatus:
+      properties:
+        name:
+          type: string    
+    editOrder:
+      parameters: 
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            description: Order's id  
+      properties:
+        StatusId:
+          type: integer
+    addProductOrder:
+      properties:
+        address:
+          type: string
+        PaymentId:
+          type: integer
+        products:
+          type: array
+          items: 
+            properties:
+              id:
+                type: integer
+                description: product id
+              quantity:
+                type: integer
+                description: number of products
+            example: 
+              id: 1
+              quantity: 2
