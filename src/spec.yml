@@ -331,7 +331,8 @@ paths:
       tags:
         - admin
   /paynow:
-    security:
+    post:
+      security:
         - bearerAuth: []
       description: It allows the user to pay the order with PayPal
       summary: Pay with PayPal

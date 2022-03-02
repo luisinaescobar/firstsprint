@@ -29,7 +29,7 @@ function makeServer() {
     server.use(session({ secret:'pass' }));
     server.use(passport.initialize());
     server.use(passport.session());
-    //server.use(helmet());
+    server.use(helmet());
     server.use('/v1', createProductRouter());
     server.use('/v1', createUserRouter());
     server.use('/v1', createPaymentRouter());

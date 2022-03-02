@@ -81,10 +81,20 @@ y corriendolo en PM2
 Si desea probar la API estas son las cedenciales de el admin.
 
 Administrador:
-username: admin
-Email: admin@admin.com
-Contraseña: admin
+    username: admin
+    Email: admin@admin.com
+    Contraseña: admin
 
+PayPal accounts
+
+Administrador:
+    Email: admin@adminmail.com
+    Contrasena: Admin123.
+
+Usuario de prueba:
+    email: user123@examplemail.com
+    Contrasena: User123.
+    
 ### 5  - Listo para usar.
 
 Testear los endpoints desde Postman.
