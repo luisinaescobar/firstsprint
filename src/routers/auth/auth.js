@@ -2,9 +2,7 @@ const passport = require('passport');
 const Auth0Strategy = require('passport-auth0').Strategy;
 require('dotenv').config()
 const express = require('express');
-const { encript } = require('../../middlewares/middlewares');
 const router = express.Router();
-const { getModel } = require('../../database/index');
 const { findCreateUser } = require('../../config/db');
 passport.serializeUser(function (user, done) {
     done(null, user);
@@ -38,7 +36,6 @@ router.get('/login/auth0', passport.authenticate('auth0', {
 router.get('/auth0/callback', passport.authenticate('auth0', {
     failureRedirect: '/error',
     successRedirect: '/v1/token'
-
 }));
 router.get('logout', (req, res) => {
     req.logOut()

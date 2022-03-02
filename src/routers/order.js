@@ -135,11 +135,7 @@ function createOrderRouter(params) {
                         where: { UserId: authData.mail.id },
                         include: [Product, Payment, Status]
                     });
-                   /* const total = await getModel('Productorder').findAll({
-                        where: { UserId: authData.mail.id }
-                    })
-                    console.log( total)
-                    res.status(200).send(total)*/
+                   
                     console.log(data.dataValues)
                    res.status(200).send(data);
                 }

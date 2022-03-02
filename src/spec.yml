@@ -108,6 +108,22 @@ paths:
       tags:
         - User
         - admin
+  /login/auth0:
+    post:
+      summary: Initiates user's session
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'          
+      responses:
+        '200':
+          description: Token
+        '401':
+          description: Wrong information
+      tags:
+        - User     
   /products:
     get:
       security:
@@ -314,6 +330,24 @@ paths:
           description: Payment with id does not exist. 
       tags:
         - admin
+  /paynow:
+    security:
+        - bearerAuth: []
+      description: It allows the user to pay the order with PayPal
+      summary: Pay with PayPal
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/paynow'
+      responses:
+        '200':
+          description: Success
+        '401':
+          description: Could not pay.
+      tags:
+        - user
   /status:
     get:
       security:
@@ -475,6 +509,21 @@ paths:
                   type: string
       tags:
         - User
+  /token:
+    get: 
+      description: Shows the user's token after login with auth0.
+      summary: shows orders.
+      responses:
+        '200':
+          description: token
+          content:
+            application/json:
+              schema: 
+                type: array
+                items: 
+                  type: string
+      tags:
+        - User
 components:
   securitySchemes:
     bearerAuth:            # arbitrary name for the security scheme
@@ -581,3 +630,7 @@ components:
             example: 
               id: 1
               quantity: 2
+    paynow:
+      properties:
+        OrderId:
+          type: integer
