@@ -12,14 +12,13 @@ passport.deserializeUser(function (user, done) {
 });
 passport.use(new Auth0Strategy({
 
-    clientID: 'OpGnuHXzms04RyNSb0jN6LlycuN0Vu5s',
-    clientSecret: 'YRy5rTVs961gqZtE94thN4rceNJtt39DcF2oo__fiOkLAjf0hyK2cQfih9mwVX1m',
-    callbackURL: 'http://localhost:5000/auth0/callback',
-    domain: 'dev-fh5mfbki.us.auth0.com',
+    clientID: process.env.AUTH0_CLIENTID,
+    clientSecret: process.env.AUTH0_SECRET,
+    callbackURL: process.env.AUTH0_BASEURL,
+    domain: process.env.AUTH0_ISSUER_BASEURL,
 }, (accessToken, refreshToken, extraParams, profile, done) => {
     if (profile) {
         console.log(profile)
-        findCreateUser(profile)
         profile1 = profile
         return done(null, profile);
     } else {

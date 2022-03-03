@@ -3,6 +3,7 @@ const { getModel } = require('../database');
 const jwt = require('jsonwebtoken');
 const { encript, verifyToken, verifyAdmin } = require('../middlewares/middlewares');
 const { getProfile } = require ('../routers/auth/auth') 
+const { findCreateUser} = require('../config/db')
 function createUserRouter(params) {
     const router = new Router();
     router.get('/users/', verifyToken, verifyAdmin, async (req, res) => {
@@ -89,9 +90,11 @@ function createUserRouter(params) {
     router.get('/token/', async (req, res) => {
         try {
             const profile = getProfile();
+            await findCreateUser(profile)
             const mail = await getModel('User').findOne({
                 where: { idProvider: profile.id }
             });
+            console.log(mail)
             const { JWT_SECRET } = process.env;
             if (mail !== null) {
                 jwt.sign({ mail }, JWT_SECRET, (err, token) => { res.json({ token }) });

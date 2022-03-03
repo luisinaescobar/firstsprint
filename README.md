@@ -1,4 +1,4 @@
-# Sprint Project 3
+# Sprint Project 4
 
 ## Recursos y tecnologias aplicadas en Node
 
@@ -94,7 +94,7 @@ Administrador:
 Usuario de prueba:
     email: user123@examplemail.com
     Contrasena: User123.
-    
+
 ### 5  - Listo para usar.
 
 Testear los endpoints desde Postman.
