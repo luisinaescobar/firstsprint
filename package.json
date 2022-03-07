@@ -2,10 +2,9 @@
   "name": "sprintone",
   "version": "1.0.0",
   "description": "",
-  "main": "src/main.js",
   "scripts": {
     "test": "mocha",
-    "start": "node main.js",
+    "start": "node src/index.js",
     "coverage": "nyc --reporter=html --reporter=text mocha"
   },
   "author": "",

@@ -31,12 +31,12 @@ function getProfile() {
 router.get('/login/auth0', passport.authenticate('auth0', {
     prompt: 'login',
     scope: 'openid profile'
-}));
+}));    
 router.get('/auth0/callback', passport.authenticate('auth0', {
     failureRedirect: '/error',
-    successRedirect: '/v1/token'
+    successRedirect: '/token'
 }));
-router.get('logout', (req, res) => {
+router.get('/logout', (req, res) => {
     req.logOut()
     res.json('sesion finalizada')
 })

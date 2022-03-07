@@ -1,0 +1,30 @@
+version: '3.3'
+
+services:
+  mi-app-db:
+    image: mariadb
+    ports:
+      - 3307:3306
+    environment:
+      - DB_USERNAME="luisina" 
+      - DB_PASSWORD="luisina" 
+      - DB_NAME="luisina"
+    volumes:
+      - ~/Documentos/dockervolume/:/var/lib/mysql
+    networks:
+      - mi-app-network
+
+  mi-app-server:
+    depends_on:
+      - mi-app-db
+    build: .
+    ports:
+      - 5000:5000
+    environment:
+      - DB_HOST=mi-app-db
+    networks:
+      - mi-app-network
+
+networks:
+  mi-app-network:
+    driver: bridge

@@ -30,12 +30,12 @@ function makeServer() {
     server.use(passport.initialize());
     server.use(passport.session());
     server.use(helmet());
-    server.use('/v1', createProductRouter());
-    server.use('/v1', createUserRouter());
-    server.use('/v1', createPaymentRouter());
-    server.use('/v1', createOrderRouter());
-    server.use('/v1', createStatusRouter());
-    server.use('/v1/userstest', makeUsersRouter());
+    server.use('/', createProductRouter());
+    server.use('/', createUserRouter());
+    server.use('/', createPaymentRouter());
+    server.use('/', createOrderRouter());
+    server.use('/', createStatusRouter());
+    server.use('/userstest', makeUsersRouter());
     server.use('/', router );
     loadSwaggerinfo(server);
     return server;

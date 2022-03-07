@@ -27,7 +27,7 @@ function verifyAdmin(req, res, next) {
     const { JWT_SECRET } = process.env
     jwt.verify(req.token, JWT_SECRET, async (error, authData) => {
        console.log(authData)
-        if (authData.id.admin === true) {
+        if (authData.mail.admin === true) {
            return next();
         }
         else {
@@ -40,7 +40,7 @@ function verifySuspend(req, res, next) {
     const { JWT_SECRET } = process.env
     jwt.verify(req.token, JWT_SECRET, async (error, authData) => {
         console.log(authData)
-        if (authData.id.disabled === false) {
+        if (authData.mail.disabled === false) {
            return next();
         }
         else {

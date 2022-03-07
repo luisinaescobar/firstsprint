@@ -38,6 +38,7 @@ function createUserRouter(params) {
                 address: req.body.address,
                 phone: req.body.phone,
                 password: encript(req.body.password),
+                idProvider: null
             });
             const mail = await getModel('User').findOne({
                 where: { email: req.body.email }
