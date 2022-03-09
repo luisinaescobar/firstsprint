@@ -105,8 +105,8 @@ function createPaymentRouter(params) {
                     "brand_name": "Luisina",
                     "landing_page": "LOGIN",
                     "user_action": "PAY_NOW",
-                    "return_url": "http://localhost:5000/v1/captureorder/",
-                    "cancel_url": "http://localhost:5000/v1/history/"
+                    "return_url": "http://localhost:5000/captureorder/",
+                    "cancel_url": "http://localhost:5000/history/"
                 },
             }
             const response = await axios.post(`${process.env.PAYPAL_API}/v2/checkout/orders`, pedido, {

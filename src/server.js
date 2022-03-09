@@ -26,17 +26,22 @@ function makeServer() {
     const server = express();
     server.use(express.json());
     server.use(express.urlencoded({ extended: false }));
-    server.use(session({ secret:'pass' }));
+    //server.use(session({ secret:'pass' }));
+    server.use(session({
+        secret: 'pass',
+        resave: true,
+        saveUninitialized: true
+    }));
     server.use(passport.initialize());
     server.use(passport.session());
     server.use(helmet());
-    server.use('/', createProductRouter());
-    server.use('/', createUserRouter());
-    server.use('/', createPaymentRouter());
-    server.use('/', createOrderRouter());
-    server.use('/', createStatusRouter());
-    server.use('/userstest', makeUsersRouter());
-    server.use('/', router );
+    server.use('/api', createProductRouter());
+    server.use('/api', createUserRouter());
+    server.use('/api', createPaymentRouter());
+    server.use('/api', createOrderRouter());
+    server.use('/api', createStatusRouter());
+    server.use('/api/userstest', makeUsersRouter());
+    server.use('/api', router );
     loadSwaggerinfo(server);
     return server;
 }
