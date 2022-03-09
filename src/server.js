@@ -29,8 +29,8 @@ function makeServer() {
     //server.use(session({ secret:'pass' }));
     server.use(session({
         secret: 'pass',
-        resave: true,
-        saveUninitialized: true
+        /*resave: true,
+        saveUninitialized: true*/
     }));
     server.use(passport.initialize());
     server.use(passport.session());
