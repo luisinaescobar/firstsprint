@@ -98,7 +98,7 @@ function createUserRouter(params) {
             console.log(mail)
             const { JWT_SECRET } = process.env;
             if (mail !== null) {
-                jwt.sign({ mail }, JWT_SECRET, (err, token) => { res.json({ token }) });
+                jwt.sign({ mail }, JWT_SECRET, (_err, token) => { res.json({ token }) });
             } else {
                 throw new Error('Wrong information');
             }

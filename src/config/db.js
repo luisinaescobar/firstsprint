@@ -63,7 +63,7 @@ async function findCreateUser(profile) {
             lastname: profile._json.family_name || profile._json.name,
             email: 'unknown@unknown.com',
             address: 'unknown',
-            phone: 'unknown',
+            phone: 123,
             password: encript('unknown'),
             admin: false,
             disabled: false,
