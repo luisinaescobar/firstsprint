@@ -94,11 +94,16 @@ Usuario de prueba:
     email: user123@examplemail.com
     Contrasena: User123.
 
-### 5  - Entorno
+### 5  - Pruebas locales
 
-Se deben actualizar las variables de entorno
+Se deben actualizar las variables de entorno y ejecutar los siguientes comandos:
+ ```
+docker-compose build
+```
 
-
+ ```
+docker-compose up
+```
 ### 6  - Listo para usar.
 
 Testear los endpoints desde Postman.
