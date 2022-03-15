@@ -70,13 +70,7 @@ y corriendolo en PM2
 
 - Para tener contacto con la API puede dirigirse a el endpoint https://www.madariaga.tk/api/v1/products o puede probarlo en Postman si asi lo desea.
 
-### 4  - Continuous Integration
-
- - El proyecto cuenta con una integracion continua utilizada a traves del bucket de s3 cuyo nombre es 'luisinasnewbucket'. 
- 
- - Repositorio de gitlab:  https://gitlab.com/luisinaescobar/code1.git
-
-### 5  - Cuestiones a tener en cuenta
+### 4  - Cuestiones a tener en cuenta
 
 Si desea probar la API estas son las cedenciales de el admin.
 
@@ -85,7 +79,11 @@ Administrador:
     Email: admin@admin.com
     Contraseña: admin
 
-PayPal accounts
+PayPal:
+
+Los pagos se realizan haciendo click en el segundo enlace con el nombre "aproved".
+
+Cuentas en PayPal
 
 Administrador:
     Email: admin@adminmail.com

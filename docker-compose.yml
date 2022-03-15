@@ -6,9 +6,10 @@ services:
     ports:
       - 3307:3306
     environment:
-      - DB_USERNAME="luisina" 
-      - DB_PASSWORD="luisina" 
-      - DB_NAME="luisina"
+      - MARIADB_ROOT_PASSWORD="newpassword"
+      - DB_USERNAME="root" 
+      - DB_PASSWORD="password" 
+      - DB_NAME="basededatos"
     volumes:
       - ~/Documentos/dockervolume/:/var/lib/mysql
     networks:

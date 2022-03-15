@@ -5,9 +5,10 @@ COPY . .
 RUN /bin/sh -c 'npm i'
 
 ENV PORT=5000
-ENV DB_USERNAME=luisina
-ENV DB_PASSWORD=luisina
-ENV DB_NAME=luisina
+ENV MARIADB_ROOT_PASSWORD=newpassword
+ENV DB_USERNAME=root
+ENV DB_PASSWORD=password
+ENV DB_NAME=basededatos
 ENV DB_PORT=3306
 ENV JWT_SECRET=secretkey
 ENV PAYPAL_CLIENTID=AVvxSgHFjtQzZc8-oY6CY3pCJCTZLiWeEas6Pn43iokH19J7wtkfbldfwxp-He1pQBVwhodekImfybhO
