@@ -69,7 +69,7 @@ y corriendolo en PM2
 ```
 - Luego podra visualizar la pagina de inicio dirigiendose a el dominio https://www.madariaga.tk
 
-- Para tener contacto con la API puede dirigirse a el endpoint https://www.madariaga.tk/api/v1/products o puede probarlo en Postman si asi lo desea.
+- Para tener contacto con la API puede dirigirse a el endpoint https://www.madariaga.tk/api/products o puede probarlo en Postman si asi lo desea.
 
 ### 4  - Cuestiones a tener en cuenta
 
@@ -100,6 +100,7 @@ Se deben actualizar las variables de entorno y ejecutar los siguientes comandos:
  ```
 docker-compose build
 ```
+y 
 
  ```
 docker-compose up
