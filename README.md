@@ -39,6 +39,7 @@ O puede ser clonado desde la consola con el siguiente link:
 ### 2  - Ingreso a la consola de AWS
 
 Dentro de la carpeta ZIP encontraras un archivo con las credenciales del usuario del tech reviewer.
+Los usuarios con acceso a la consola de administración de AWS pueden iniciar sesión en: https://190608036798.signin.aws.amazon.com/console
 
 ### 3  - Inicializar la instancia
 
@@ -93,6 +94,11 @@ Usuario de prueba:
     email: user123@examplemail.com
     Contrasena: User123.
 
-### 5  - Listo para usar.
+### 5  - Entorno
+
+Se deben actualizar las variables de entorno
+
+
+### 6  - Listo para usar.
 
 Testear los endpoints desde Postman.
