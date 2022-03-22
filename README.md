@@ -109,6 +109,12 @@ docker-compose up
 
 Pasos para testear los endpoints desde Postman.
 
+Abrir la aplicacion Postman
+
+En el margen superior izquierdo hacer click en File y seleccionar import. Alli se abrira una ventana donde debera elegir el fichero con nombre "sprint 4.postman_collection" previamente descargado del zipfile.
+
+Comenzar a hacer uso de la API:
+
 1)   Hacer el login en https://www.madariaga.tk/api/login/auth0
 
 2) Elegir un IDP de preferencia
