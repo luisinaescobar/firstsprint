@@ -82,7 +82,7 @@ Administrador:
 
 PayPal:
 
-Los pagos se realizan haciendo click en el segundo enlace con el nombre "aproved".
+Los pagos se realizan haciendo click en el segundo enlace con el nombre "approve".
 
 Cuentas en PayPal
 
@@ -107,4 +107,82 @@ docker-compose up
 ```
 ### 6  - Listo para usar.
 
-Testear los endpoints desde Postman.
+Pasos para testear los endpoints desde Postman.
+
+1)   Hacer el login en https://www.madariaga.tk/api/login/auth0
+
+2) Elegir un IDP de preferencia
+
+3) Copiar el token que recibira luego de escribir sus credenciales.
+
+4) Ver los productos en https://www.madariaga.tk/api/products
+
+5) Hacer un pedido en https://www.madariaga.tk/api/orders(recordar usar siempre el token en Authorization con la palabra Bearer).
+
+Por ejemplo: 
+{
+  "address": "string22",
+  "PaymentId": 1,
+  "products": [
+    {
+      "id": 1,
+      "quantity": 2
+    }
+  ]
+}
+
+6) Ver el estado del pedido en https://www.madariaga.tk/api/history (recordar usar siempre el token en Authorization con la palabra Bearer).
+
+7) Hacer el pago del pedido en https://www.madariaga.tk/api/paynow usando el id de la orden realizada previamente (recordar usar siempre el token en Authorization con la palabra Bearer).
+
+Por ejemplo:
+
+{
+  "OrderId": 1
+}
+
+Recibiras como respuesta algo asi:
+{
+    "id": "38066724361326408",
+    "status": "CREATED",
+    "links": [
+        {
+            "href": "https://api.sandbox.paypal.com/v2/checkout/orders/38066724361326408",
+            "rel": "self",
+            "method": "GET"
+        },
+        {
+            "href": "https://www.sandbox.paypal.com/checkoutnow?token=38066724361326408",
+            "rel": "approve",
+            "method": "GET"
+        },
+        {
+            "href": "https://api.sandbox.paypal.com/v2/checkout/orders/38066724361326408",
+            "rel": "update",
+            "method": "PATCH"
+        },
+        {
+            "href": "https://api.sandbox.paypal.com/v2/checkout/orders/38066724361326408/capture",
+            "rel": "capture",
+            "method": "POST"
+        }
+    ]
+}
+
+Hacer click en el link que dice:  "rel": "approve",
+
+8) El acceso a Paypal se realizara con las siguientes credenciales:
+
+Usuario de prueba:
+    email: user123@examplemail.com
+    Contrasena: User123.
+
+9) Pagar el pedido.
+
+10) Ver el estado del pedido en https://www.madariaga.tk/api/history (recordar usar siempre el token en Authorization con la palabra Bearer).
+
+11) Se podra ver el resultado de la transaccion en https://www.sandbox.paypal.com/ con las credenciales del administrador:
+
+Administrador:
+    Email: admin@adminmail.com
+    Contrasena: Admin123.
