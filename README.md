@@ -95,16 +95,8 @@ Usuario de prueba:
     Contrasena: User123.
 
 ### 5  - Pruebas locales
+Cambiar variables en file .env
 
-Se deben actualizar las variables de entorno y ejecutar los siguientes comandos:
- ```
-docker-compose build
-```
-y 
-
- ```
-docker-compose up
-```
 ### 6  - Listo para usar.
 
 Pasos para testear los endpoints desde Postman.
